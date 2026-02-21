@@ -1,7 +1,22 @@
-проверка 😭🙏🏻🍕🥹💋💪🏻 
-`curl -X POST http://localhost/tasks -H "Content-Type: application/json" -d '{"name": "aosoos", "email": "admin@example.com"}'`
-создать новую задачу
+# Структура и наполнение базы (PostgreSQL)
+## Схема таблицы task
+База данных создается автоматически при запуске приложения.
+Поле             Тип                Описание
+id               Integer            Уникальный ключ (PK)
+title            String             Заголовок (Обязательно)
+content          String             Описание (Опционально)
 
+Чтобы добавить данные в пустую базу, используй команду curl в терминале:
+`curl -X POST http://localhost/tasks -H "Content-Type: application/json" -d '{"name": "aosoos", "content": "admin@example.com"}'`
+
+Если нужно зайти в саму базу через Docker и посмотреть записи:
+# 1. Зайти в базу
+docker exec -it task5_db_1 psql -U user -d crud_db
+
+# 2. Посмотреть таблицу
+SELECT * FROM task;
+
+# Команды для проверки работы: 
 `curl http://localhost/tasks`
 получить список задач
 
