@@ -1,10 +1,11 @@
 # Структура и наполнение базы (PostgreSQL)
 ## Схема таблицы task
 База данных создается автоматически при запуске приложения.
-Поле             Тип                Описание
-id               Integer            Уникальный ключ (PK)
-title            String             Заголовок (Обязательно)
-content          String             Описание (Опционально)
+| Поле | Тип | Описание |
+| :--- | :--- | :--- |
+| **id** | Integer | Уникальный ключ (PK) |
+| **title** | String | Заголовок (Обязательно) |
+| **content** | String | Описание (Опционально) |
 
 Чтобы добавить данные в пустую базу, используй команду curl в терминале:
 `curl -X POST http://localhost/tasks -H "Content-Type: application/json" -d '{"name": "aosoos", "content": "admin@example.com"}'`
