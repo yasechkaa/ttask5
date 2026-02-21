@@ -1,49 +1,39 @@
 # Структура и наполнение базы (PostgreSQL)
-## Схема таблицы task
+Схема таблицы users 
 | Поле | Тип | Описание |
 | :--- | :--- | :--- |
-| **id** | Integer | Уникальный ключ (PK) |
-| **title** | String | Заголовок (Обязательно) |
-| **content** | String | Описание (Опционально) |
+| **id** | Integer | Уникальный ключ (Primary Key) |
+| **name** | String | Имя пользователя (Обязательно) |
+| **surname** | String | Фамилия (Обязательно) |
+| **age** | Integer | Возраст (18-100) |
+| **town** | String | Город проживания |
 
-Чтобы добавить данные в пустую базу, используй команду curl в терминале:
-`curl -X POST http://localhost/tasks -H "Content-Type: application/json" -d '{"name": "aosoos", "content": "admin@example.com"}'`
+## Команды для управления и проверки
 
-## Если нужно зайти в саму базу через Docker и посмотреть записи:
-1. Зайти в базу
-docker exec -it task5_db_1 psql -U user -d crud_db
+curl http://localhost/users — получить список всех пользователей.
 
-2. Посмотреть таблицу
-SELECT * FROM task;
+curl http://localhost/users/1 — получить данные пользователя с ID 1 (проверка кэша Redis).
 
-# Команды для проверки работы: 
-`curl http://localhost/tasks`
-получить список задач
+curl -X POST http://localhost/users -H "Content-Type: application/json" -d '{"name": "aosoos", "surname": "admin", "age": 20, "town": "Moscow"}' — добавить нового пользователя.
 
-`curl -X PUT http://localhost/tasks/1 -H "Content-Type: application/json" -d '{"email": "new@example.com"}'`
-обновить задачу с id 1
+curl -X PUT http://localhost/users/1 -H "Content-Type: application/json" -d '{"age": 25}' — обновить данные пользователя.
 
-`curl -X DELETE http://localhost/tasks/1`
-удалить задачу с id 1
+curl -X DELETE http://localhost/users/1 — удалить пользователя.
 
-`docker exec -it dz5-db-1 psql -U user -d flask_db`
-зайти в базу данных
+## Работа с базой данных внутри Docker:
 
-`\dt`
-показать список таблиц
+sudo docker exec -it task5_db_1 psql -U user -d crud_db — зайти в консоль PostgreSQL.
 
-`\d task`
-показать структуру таблицы task
+\dt — показать список таблиц (должна быть users).
 
-`select * from task`
-показать все записи в таблице task
+\d users — показать структуру таблицы пользователей.
 
-`docker compose logs -f nginx`
-смотреть логи nginx
+SELECT * FROM users; — показать все записи в таблице.
 
-`docker compose logs -f db`
-смотреть логи базы данных
+## Просмотр логов (если что-то не работает):
 
-`docker compose logs -f web`
-смотреть логи web-сервиса
+sudo docker-compose logs -f app — логи Python-приложения (Flask + Gunicorn).
 
+sudo docker-compose logs -f db — логи базы данных.
+
+sudo docker-compose logs -f redis — логи кэш-сервера.
