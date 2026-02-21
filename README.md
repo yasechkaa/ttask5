@@ -10,10 +10,10 @@ content          String             Описание (Опционально)
 `curl -X POST http://localhost/tasks -H "Content-Type: application/json" -d '{"name": "aosoos", "content": "admin@example.com"}'`
 
 Если нужно зайти в саму базу через Docker и посмотреть записи:
-# 1. Зайти в базу
+1. Зайти в базу
 docker exec -it task5_db_1 psql -U user -d crud_db
 
-# 2. Посмотреть таблицу
+2. Посмотреть таблицу
 SELECT * FROM task;
 
 # Команды для проверки работы: 
